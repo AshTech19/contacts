@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import ListContacts from './ListContacts'
 import * as ContactsAPI from './utils/ContactsAPI'
+import CreateContact from './CreateContact'
 
 /* Before adding state
 const contacts = [
@@ -51,7 +52,8 @@ class App extends Component{
     ]
     */
    // After adding lifecycle event
-   contacts:[]
+   contacts:[],
+   screen:'list',
   }
 
   componentDidMount(){
@@ -78,10 +80,17 @@ class App extends Component{
         {/*Before adding state
         <ListContacts contacts = {contacts}/>
         */}
-        <ListContacts 
+        {this.state.screen === 'list' && (<ListContacts 
           contacts = {this.state.contacts}
           onDeleteContact = {this.removeContact}
+          onNavigate={()=>{
+            this.setState(()=>({
+              screen:'create'
+            }))
+          }}
         />
+        )}
+        {this.state.screen === 'create' && (<CreateContact/> )}
       </div>
     )
   }
